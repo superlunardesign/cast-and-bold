@@ -6,23 +6,23 @@ This XML file does not appear to have any style information associated with it. 
 <link>http://www.superlunardesignco.wixsite.com/cast-and-bold</link>
 <language>en</language>
 <copyright/>
-<description>The Cut is a weekly audio magazine exploring culture, style, sex, politics and more. Intimate, provocative, and probing, the Cut aims to ask questions before listeners even know they have them, always with a generous wit and an expansive idea of what is possible. From New York Magazine and The Vox Media Podcast Network. New episodes every other Wednesday.</description>
+<description>Cast & Bold is a fictional podcast created to tie together this beautiful Wix website template theme.</description>
 <image>
-<url>https://megaphone.imgix.net/podcasts/e546a436-6f4a-11e8-b953-4374577f137d/image/uploads_2F1596658648455-5pl4f5ua5e5-3e21193107ac6dd582134a0bbeac561d_2FTheCut_Podcast_TileArt_RV3_3000x3000.png?ixlib=rails-2.1.2&max-w=3000&max-h=3000&fit=crop&auto=format,compress</url>
+<url>https://static.wixstatic.com/media/b8193e_6ac663c6e4174401a95eda0788f1bd61~mv2.png</url>
 <title>The Cut</title>
 <link>http://www.thecut.com</link>
 </image>
 <itunes:explicit>no</itunes:explicit>
 <itunes:type>episodic</itunes:type>
-<itunes:subtitle>Style. Self. Culture. Power.</itunes:subtitle>
-<itunes:author>Vox Media Podcast Network</itunes:author>
-<itunes:summary>The Cut is a weekly audio magazine exploring culture, style, sex, politics and more. Intimate, provocative, and probing, the Cut aims to ask questions before listeners even know they have them, always with a generous wit and an expansive idea of what is possible. From New York Magazine and The Vox Media Podcast Network. New episodes every other Wednesday.</itunes:summary>
+<itunes:subtitle>CAST & BOLD</itunes:subtitle>
+<itunes:author>Superlunar Podcast Network</itunes:author>
+<itunes:summary>Cast & Bold is a fictional podcast created to tie together this beautiful Wix website template theme.</itunes:summary>
 <content:encoded>
-<![CDATA[ <p>The Cut is a weekly audio magazine exploring culture, style, sex, politics and more. Intimate, provocative, and probing, the Cut aims to ask questions before listeners even know they have them, always with a generous wit and an expansive idea of what is possible. From New York Magazine and The Vox Media Podcast Network. New episodes every other Wednesday.</p> ]]>
+<![CDATA[ <p>Cast & Bold is a fictional podcast created to tie together this beautiful Wix website template theme.</p> ]]>
 </content:encoded>
 <itunes:owner>
-<itunes:name>New York Magazine</itunes:name>
-<itunes:email>podcasting@voxmedia.com</itunes:email>
+<itunes:name>Superlunar Design Co</itunes:name>
+<itunes:email>christina@superlunardeisgn.com</itunes:email>
 </itunes:owner>
 <itunes:image href="https://megaphone.imgix.net/podcasts/e546a436-6f4a-11e8-b953-4374577f137d/image/uploads_2F1596658648455-5pl4f5ua5e5-3e21193107ac6dd582134a0bbeac561d_2FTheCut_Podcast_TileArt_RV3_3000x3000.png?ixlib=rails-2.1.2&max-w=3000&max-h=3000&fit=crop&auto=format,compress"/>
 <itunes:category text="Society & Culture">
