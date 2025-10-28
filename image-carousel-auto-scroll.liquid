@@ -163,7 +163,7 @@ const ImageCarouselAutoScroll = (function() {
   let isAutoScrollEnabled = {{ section.settings.auto_scroll | json }};
   let autoScrollSpeed = {{ section.settings.auto_scroll_speed | default: 0.5 | json }};
   let isHovered = false;
-  let isPaused = false;
+  let isTouching = false;
   let carousel = null;
   let halfwayPoint = 0;
 
@@ -181,18 +181,17 @@ const ImageCarouselAutoScroll = (function() {
     carousel.addEventListener('mouseenter', () => { isHovered = true; });
     carousel.addEventListener('mouseleave', () => { isHovered = false; });
 
-    // On mobile, prevent touch scrolling from permanently stopping auto-scroll
-    let touchTimeout = null;
+    // Pause only while actively touching
     carousel.addEventListener('touchstart', () => {
-      isPaused = true;
-      clearTimeout(touchTimeout);
+      isTouching = true;
     }, { passive: true });
 
     carousel.addEventListener('touchend', () => {
-      // Resume auto-scroll after 2 seconds of no touching
-      touchTimeout = setTimeout(() => {
-        isPaused = false;
-      }, 2000);
+      isTouching = false;
+    }, { passive: true });
+
+    carousel.addEventListener('touchcancel', () => {
+      isTouching = false;
     }, { passive: true });
 
     // Start auto-scroll if enabled
@@ -205,7 +204,7 @@ const ImageCarouselAutoScroll = (function() {
     if (!carousel || animationFrameId) return;
 
     function animate() {
-      if (!isHovered && !isPaused) {
+      if (!isHovered && !isTouching) {
         carousel.scrollLeft += autoScrollSpeed;
 
         // Seamless loop: when we reach the duplicate set, jump back to start
