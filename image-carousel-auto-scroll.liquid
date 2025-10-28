@@ -7,8 +7,32 @@
 
     <div class="image-carousel-wrapper">
       <div class="image-carousel" id="imageCarousel">
+        <!-- First set of images -->
         {% for block in section.blocks %}
           <div class="image-slide" {{ block.shopify_attributes }}>
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | image_url: width: 800 }}"
+                   alt="{{ block.settings.image.alt | default: block.settings.caption | escape }}"
+                   loading="lazy">
+            {% else %}
+              <div class="image-placeholder">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="60" height="60" fill="#f0f0f0"/>
+                  <path d="M20 25L30 35L40 25" stroke="#ccc" stroke-width="2"/>
+                  <circle cx="25" cy="22" r="3" fill="#ccc"/>
+                </svg>
+              </div>
+            {% endif %}
+
+            {% if block.settings.caption != blank %}
+              <p class="image-caption">{{ block.settings.caption }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <!-- Duplicate set for seamless looping -->
+        {% for block in section.blocks %}
+          <div class="image-slide" aria-hidden="true">
             {% if block.settings.image %}
               <img src="{{ block.settings.image | image_url: width: 800 }}"
                    alt="{{ block.settings.image.alt | default: block.settings.caption | escape }}"
@@ -133,21 +157,43 @@
 </style>
 
 <script>
-// Auto-scroll system for image carousel
+// Auto-scroll system for image carousel with seamless infinite loop
 const ImageCarouselAutoScroll = (function() {
   let animationFrameId = null;
   let isAutoScrollEnabled = {{ section.settings.auto_scroll | json }};
   let autoScrollSpeed = {{ section.settings.auto_scroll_speed | default: 0.5 | json }};
   let isHovered = false;
+  let isPaused = false;
   let carousel = null;
+  let halfwayPoint = 0;
 
   function init() {
     carousel = document.getElementById('imageCarousel');
     if (!carousel) return;
 
-    // Pause on hover
+    // Calculate halfway point (where duplicate images start)
+    // We need to wait a bit for images to load and get accurate scrollWidth
+    setTimeout(() => {
+      halfwayPoint = carousel.scrollWidth / 2;
+    }, 100);
+
+    // Pause on hover (desktop only)
     carousel.addEventListener('mouseenter', () => { isHovered = true; });
     carousel.addEventListener('mouseleave', () => { isHovered = false; });
+
+    // On mobile, prevent touch scrolling from permanently stopping auto-scroll
+    let touchTimeout = null;
+    carousel.addEventListener('touchstart', () => {
+      isPaused = true;
+      clearTimeout(touchTimeout);
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', () => {
+      // Resume auto-scroll after 2 seconds of no touching
+      touchTimeout = setTimeout(() => {
+        isPaused = false;
+      }, 2000);
+    }, { passive: true });
 
     // Start auto-scroll if enabled
     if (isAutoScrollEnabled) {
@@ -159,12 +205,12 @@ const ImageCarouselAutoScroll = (function() {
     if (!carousel || animationFrameId) return;
 
     function animate() {
-      if (!isHovered) {
+      if (!isHovered && !isPaused) {
         carousel.scrollLeft += autoScrollSpeed;
 
-        // Loop back to start when reaching the end
-        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-        if (carousel.scrollLeft >= maxScroll) {
+        // Seamless loop: when we reach the duplicate set, jump back to start
+        // This creates an infinite loop effect without visible jump
+        if (carousel.scrollLeft >= halfwayPoint) {
           carousel.scrollLeft = 0;
         }
       }
